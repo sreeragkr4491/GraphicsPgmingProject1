@@ -2200,354 +2200,996 @@
 
 //lab 21 mouse button,scrolling pgm
 
-#include<GL/glew.h>//glew lib
-#include<GLFW/glfw3.h>//glfw lib
+
+//#include<GL/glew.h>//glew lib
+//#include<GLFW/glfw3.h>//glfw lib
+//#include<iostream>
+//#define S_W 1000
+//#define S_H 800
+//using namespace std;
+//
+//static void cursorPosition(GLFWwindow* window, double xposi, double yposi);
+//void cursorEnter(GLFWwindow* window, int enter);
+//void mouseBtn(GLFWwindow* window, int btn, int act, int mods);
+//void scrollBtn(GLFWwindow* window, double xoffset, double yoffset);
+//
+//int main(void)//1. main fun
+//{
+//	//for window width and height
+//	GLint wid = 1000;
+//	GLint height = 800;
+//	//for holding window
+//	GLFWwindow* window;//pointer variable 
+//
+//	glfwInit();//glfw initialize
+//	if (!glfwInit())
+//	{
+//		cout << "glfw init function error" << endl;
+//	}
+//	else
+//	{
+//		cout << "glfw init sucess" << endl;
+//	}
+//	// create a windowmode and its opengl context
+//	window = glfwCreateWindow(S_W, S_H, " opengl GAME WINDOW with background color", NULL, NULL);
+//	if (!window)
+//	{
+//		glfwTerminate();
+//		cout << "window error" << endl;
+//	}
+//	else
+//	{
+//		cout << "window sucess" << endl;
+//	}
+//
+//	// make the window context current
+//	glfwMakeContextCurrent(window);
+//
+//	//mouse functions calling 
+//	glfwSetCursorPosCallback(window, cursorPosition);
+//	glfwSetCursorEnterCallback(window, cursorEnter);
+//	glfwSetMouseButtonCallback(window, mouseBtn);
+//	glfwSetScrollCallback(window, scrollBtn);
+//
+//	float vertices[] =
+//	{
+//		//road
+//		0,100,0,
+//		1000,100,0,
+//		1000,25,0,
+//		0,25,0
+//	};
+//	float colorRoad[] =
+//	{
+//		//rgb
+//		0,0,0,
+//		0,0,0,
+//		0,0,0
+//	};
+//	float bus[] =
+//	{
+//		//bus
+//		700,125,0,
+//		900,125,0,
+//		900,200,0,
+//		700,200,0,
+//	};
+//	float colorbus[] =
+//	{
+//		//rgb
+//		1,0,0,
+//		1,0,0,
+//		1,0,0,
+//		1,0,0
+//	};
+//	float house[] = {
+//		//house
+//		100,200,0,
+//		200,200,0,
+//		200,300,0,
+//		100,300,0,
+//		
+//		100,300,0,
+//		150,350,0,
+//		200,300,0
+//	};
+//	float colorhs[] =
+//	{
+//		//rgb
+//		0,0,1,
+//		0,0,1,
+//		0,0,1,
+//		0,0,1
+//	};
+//	float lwindow[] =
+//	{
+//		//left window
+//			120,250,0,
+//			130,250,0,
+//			130,270,0,
+//			120,270,0,
+//	};
+//	float colorlw[] =
+//	{
+//		//rgb
+//		1,1,1,
+//		1,1,1,
+//		1,1,1
+//	};
+//	float rwindow[] =
+//	{
+//		//right window
+//		170,250,0,
+//		180,250,0,
+//		180,270,0,
+//		170,270,0,
+//	};
+//	float tree[] =
+//	{
+//		//tree
+//			550,500,0,
+//			600,550,0,
+//			650,500,0,
+//			550,500,0,
+//
+//	};
+//	float tree1[] =
+//	{
+//		//tree
+//		585, 500, 0,
+//		585, 450, 0,
+//		600, 450, 0,
+//		600, 500, 0,
+//		585, 500, 0,
+//	};
+//	float hill[] = {
+//		//hills
+//		0,650,0,
+//		100,750,0,
+//		250,700,0,
+//		200,650,0,
+//		0,650,0,
+//
+//	};
+//	float hill1[] = {
+//		200,650,0,
+//		300,775,0,
+//		450,700,0,
+//		400,650,0,
+//		200,650,0,
+//		};
+//
+//	float hill2[] = {
+//		400, 650, 0,
+//		500, 750, 0,
+//		650, 700, 0,
+//		600, 650, 0,
+//		400, 650, 0
+//	};
+//	float hill3[] = {
+//		600, 650, 0,
+//		700, 775, 0,
+//		850, 700, 0,
+//		800, 650, 0,
+//		600, 650, 0,
+//	};
+//	float hill4[] = {
+//		800,650,0,
+//		900,750,0,
+//		1000,650,0,
+//		800,650,0
+//	};
+//
+//	float colorhill[] = {
+//		//rgb
+//		//as many vertex as many points
+//		0,1,0,
+//		0,1,0,
+//		0,1,0,
+//		0,1,0
+//	};
+//
+//	//FOR SCREEN RESOLUTION
+//	glViewport(0, 0, S_W, S_H);//for view your screen(1. x, 2. y,3. w, 4. h)
+//	glMatrixMode(GL_PROJECTION);// for change matrix mode
+//	glOrtho(0, S_W, 0, S_H, 0.5, 0);//NEW COORDINATE SYSTEM/ hover mouse seeparameters(this represent the actual coordinate system which you changed)
+//	glMatrixMode(GL_MODELVIEW);//FOR DEFAULT MATRIX MODE(in future from here we will apply transformation)
+//
+//	//loop untill the user not close the window
+//	while (!glfwWindowShouldClose(window))
+//	{
+//
+//		//for background color
+//		glClearColor(0, 1, 1, 0); //for get the RGB color
+//		glClear(GL_COLOR_BUFFER_BIT);//for clear the buffer
+//
+//		//road
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorRoad);
+//		glVertexPointer(3, GL_FLOAT, 0, vertices);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//bus
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(1, 0, 0);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorbus);
+//		glVertexPointer(3, GL_FLOAT, 0, bus);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//house
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(0,0,1);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorhs);
+//		glVertexPointer(3, GL_FLOAT, 0, house);
+//		glDrawArrays(GL_POLYGON, 0, 7);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//lwindow
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(1, 1, 1);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorlw);
+//		glVertexPointer(3, GL_FLOAT, 0, lwindow);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//rwindow
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(1, 1, 1);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorlw);
+//		glVertexPointer(3, GL_FLOAT, 0, rwindow);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//tree
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, tree);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//tree
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, tree1);
+//		glDrawArrays(GL_POLYGON, 0, 5);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//
+//		//hills
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill);
+//		glDrawArrays(GL_POLYGON, 0, 5);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill1);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill2);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill3);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill4);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glfwSwapBuffers(window);//for swap the new color for window
+//		glfwPollEvents();//it detects different event and process
+//	}
+//	glfwTerminate();
+//	return 0;
+//}
+//
+//
+//static void cursorPosition(GLFWwindow* window, double xposi, double yposi)
+//{
+//	cout << "x posi==" << xposi << "!!" << "y posi==" << yposi << endl;
+//
+//}
+//void cursorEnter(GLFWwindow* window, int enter)
+//{
+//	if (enter)
+//	{
+//		cout << "hey you entered inside window" << endl;
+//	}
+//	else
+//	{
+//		cout << "you left the window" << endl;
+//	}
+//}
+//void mouseBtn(GLFWwindow* window, int btn, int act, int mods)
+//{
+//	if (btn == GLFW_MOUSE_BUTTON_RIGHT && act == GLFW_PRESS)
+//	{
+//		cout << "Right button has been pressed" << endl;
+//	}
+//	if (btn == GLFW_MOUSE_BUTTON_LEFT && act == GLFW_PRESS)
+//	{
+//		cout << "LEft button has been pressed" << endl;
+//	}
+//}
+//void scrollBtn(GLFWwindow* window, double xoffset, double yoffset)
+//{
+//	cout << "xoffset==" << xoffset << "!!" << "yoffset==" << yoffset << endl;
+//}
+//
+
+//lab 22 with functions
+
+//
+//#include<GL/glew.h>//glew lib
+//#include<GLFW/glfw3.h>//glfw lib
+//#include<iostream>
+//#define S_W 1000
+//#define S_H 800
+//using namespace std;
+//
+//
+//void display();
+//
+//int main(void)//1. main fun
+//{
+//	//for window width and height
+//	GLint wid = 1000;
+//	GLint height = 800;
+//	//for holding window
+//	GLFWwindow* window;//pointer variable 
+//
+//	glfwInit();//glfw initialize
+//	if (!glfwInit())
+//	{
+//		cout << "glfw init function error" << endl;
+//	}
+//	else
+//	{
+//		cout << "glfw init sucess" << endl;
+//	}
+//	// create a windowmode and its opengl context
+//	window = glfwCreateWindow(S_W, S_H, " opengl GAME WINDOW with background color", NULL, NULL);
+//	if (!window)
+//	{
+//		glfwTerminate();
+//		cout << "window error" << endl;
+//	}
+//	else
+//	{
+//		cout << "window sucess" << endl;
+//	}
+//
+//	// make the window context current
+//	glfwMakeContextCurrent(window);
+//
+//	//mouse functions calling 
+//	display();
+//	float vertices[] =
+//	{
+//		//road
+//		0,100,0,
+//		1000,100,0,
+//		1000,25,0,
+//		0,25,0
+//	};
+//	float colorRoad[] =
+//	{
+//		//rgb
+//		0,0,0,
+//		0,0,0,
+//		0,0,0
+//	};
+//	
+//	float bus[] =
+//	{
+//		//bus
+//		700,125,0,
+//		900,125,0,
+//		900,200,0,
+//		700,200,0,
+//	};
+//	float colorbus[] =
+//	{
+//		//rgb
+//		1,0,0,
+//		1,0,0,
+//		1,0,0,
+//		1,0,0
+//	};
+//	float house[] = {
+//		//house
+//		100,200,0,
+//		200,200,0,
+//		200,300,0,
+//		100,300,0,
+//		
+//		100,300,0,
+//		150,350,0,
+//		200,300,0
+//	};
+//	float colorhs[] =
+//	{
+//		//rgb
+//		0,0,1,
+//		0,0,1,
+//		0,0,1,
+//		0,0,1
+//	};
+//	float lwindow[] =
+//	{
+//		//left window
+//			120,250,0,
+//			130,250,0,
+//			130,270,0,
+//			120,270,0,
+//	};
+//	float colorlw[] =
+//	{
+//		//rgb
+//		1,1,1,
+//		1,1,1,
+//		1,1,1
+//	};
+//	float rwindow[] =
+//	{
+//		//right window
+//		170,250,0,
+//		180,250,0,
+//		180,270,0,
+//		170,270,0,
+//	};
+//	float tree[] =
+//	{
+//		//tree
+//			550,500,0,
+//			600,550,0,
+//			650,500,0,
+//			550,500,0,
+//
+//	};
+//	float tree1[] =
+//	{
+//		//tree
+//		585, 500, 0,
+//		585, 450, 0,
+//		600, 450, 0,
+//		600, 500, 0,
+//		585, 500, 0,
+//	};
+//	float hill[] = {
+//		//hills
+//		0,650,0,
+//		100,750,0,
+//		250,700,0,
+//		200,650,0,
+//		0,650,0,
+//
+//	};
+//	float hill1[] = {
+//		200,650,0,
+//		300,775,0,
+//		450,700,0,
+//		400,650,0,
+//		200,650,0,
+//		};
+//
+//	float hill2[] = {
+//		400, 650, 0,
+//		500, 750, 0,
+//		650, 700, 0,
+//		600, 650, 0,
+//		400, 650, 0
+//	};
+//	float hill3[] = {
+//		600, 650, 0,
+//		700, 775, 0,
+//		850, 700, 0,
+//		800, 650, 0,
+//		600, 650, 0,
+//	};
+//	float hill4[] = {
+//		800,650,0,
+//		900,750,0,
+//		1000,650,0,
+//		800,650,0
+//	};
+//
+//	float colorhill[] = {
+//		//rgb
+//		//as many vertex as many points
+//		0,1,0,
+//		0,1,0,
+//		0,1,0,
+//		0,1,0
+//	};
+//
+//	//FOR SCREEN RESOLUTION
+//	glViewport(0, 0, S_W, S_H);//for view your screen(1. x, 2. y,3. w, 4. h)
+//	glMatrixMode(GL_PROJECTION);// for change matrix mode
+//	glOrtho(0, S_W, 0, S_H, 0.5, 0);//NEW COORDINATE SYSTEM/ hover mouse seeparameters(this represent the actual coordinate system which you changed)
+//	glMatrixMode(GL_MODELVIEW);//FOR DEFAULT MATRIX MODE(in future from here we will apply transformation)
+//
+//	//loop untill the user not close the window
+//	while (!glfwWindowShouldClose(window))
+//	{
+//
+//		//for background color
+//		glClearColor(0, 1, 1, 0); //for get the RGB color
+//		glClear(GL_COLOR_BUFFER_BIT);//for clear the buffer
+//
+//		//road
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorRoad);
+//		glVertexPointer(3, GL_FLOAT, 0, vertices);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//bus
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(1, 0, 0);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorbus);
+//		glVertexPointer(3, GL_FLOAT, 0, bus);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//house
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(0,0,1);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorhs);
+//		glVertexPointer(3, GL_FLOAT, 0, house);
+//		glDrawArrays(GL_POLYGON, 0, 7);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//lwindow
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(1, 1, 1);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorlw);
+//		glVertexPointer(3, GL_FLOAT, 0, lwindow);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//rwindow
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glColor3f(1, 1, 1);
+//		//glEnableClientState(GL_COLOR_ARRAY);
+//		//glColorPointer(3, GL_FLOAT, 0, colorlw);
+//		glVertexPointer(3, GL_FLOAT, 0, rwindow);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		//glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//tree
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, tree);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		//tree
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, tree1);
+//		glDrawArrays(GL_POLYGON, 0, 5);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//
+//		//hills
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill);
+//		glDrawArrays(GL_POLYGON, 0, 5);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill1);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill2);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill3);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glColorPointer(3, GL_FLOAT, 0, colorhill);
+//		glVertexPointer(3, GL_FLOAT, 0, hill4);
+//		glDrawArrays(GL_POLYGON, 0, 4);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glfwSwapBuffers(window);//for swap the new color for window
+//		glfwPollEvents();//it detects different event and process
+//	}
+//	glfwTerminate();
+//	return 0;
+//}
+//
+//
+//void drawroad()
+//{
+//	
+//}
+//
+//void display()
+//{
+//}
+
+//lab 23 3D Drawing
+
+//
+//#include<GL/glew.h>
+//#include<GLFW/glfw3.h>
+//#include<iostream>
+//
+//using namespace std;
+//
+//void main()
+//{
+//	GLint wid = 800; //*window variable
+//	GLint height = 800; //*window variable
+//	GLFWwindow* window; //pointer var as window that will hold address only 
+//	glfwInit();
+//	if (!glfwInit())
+//	{
+//		cout << "glfwINit function error!!" << endl;
+//	}
+//	else
+//	{
+//		cout << "glfwINit function is available!!" << endl;
+//	}
+//	window = glfwCreateWindow(wid, height, "Window with background color", NULL, NULL); //*assigned window variable 
+//	if (!window)
+//	{
+//		cout << "Window not available!!" << endl;
+//	}
+//	else
+//	{
+//		cout << "Window is opening successfully!!" << endl;
+//	}
+//
+//	// make the window context current
+//	glfwMakeContextCurrent(window);
+//
+//	float vertices[] =
+//	{
+//		-1, -1, -1,
+//		-1, -1,  1,
+//		-1,  1,  1,
+//		-1,  1, -1,//left
+//
+//		 1, -1, -1,
+//		 1, 1, -1,
+//		 1, 1, 1,
+//		 1, -1, 1,//right
+//
+//		-1, -1, -1,   -1, -1, 0.4,   1, -1, 0.4,   1, -1, -1,//bottom
+//	-1, 1, -1,   -1, 0.4, 1,   1, 0.4, 1,   1, 1, -1,//top
+//	-0.5, -1, -1,   -0.5, 0.5, -1,   0.5,  0.5, -1,  0.5, -1, -1,//back
+//	-0.25, -0.25, 1,  -0.25, 0.25, 1,  0.25, 0.25, 1,  0.25, -0.25, 1//front
+//
+//	};
+//
+//	GLfloat colors[] =
+//	{
+//	0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+//	1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+//	0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+//	0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+//	0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+//	0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
+//	};
+//
+//	//gameloop
+//	while (!glfwWindowShouldClose(window))
+//	{
+//		//for the bg color
+//		glClearColor(0.5, 1, 1, 0); //for rgb color change
+//		glClear(GL_COLOR_BUFFER_BIT);//to clear the buffer
+//
+//		//draw triangle
+//		//glColor3f(1, 0, 0);
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glVertexPointer(3, GL_FLOAT, 0, vertices);
+//		glColorPointer(3, GL_FLOAT, 0, colors);
+//		glDrawArrays(GL_QUADS, 0, 24);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glLoadIdentity();
+//		gluPerspective(100, wid / height, 1.2, 10);
+//		glTranslatef(0, 0, -1);
+//
+//		glfwSwapBuffers(window);//to swap the new color for window
+//		glfwPollEvents();
+//	}
+//	glfwTerminate();
+//}
+
+
+//lab 24 3D
+
+
+//
+//#include<GL/glew.h>
+//#include<GLFW/glfw3.h>
+//#include<iostream>
+//
+//using namespace std;
+//
+//void main()
+//{
+//	GLint wid = 800; //*window variable
+//	GLint height = 800; //*window variable
+//	GLFWwindow* window; //pointer var as window that will hold address only 
+//	glfwInit();
+//	if (!glfwInit())
+//	{
+//		cout << "glfwINit function error!!" << endl;
+//	}
+//	else
+//	{
+//		cout << "glfwINit function is available!!" << endl;
+//	}
+//	window = glfwCreateWindow(wid, height, "Window with background color", NULL, NULL); //*assigned window variable 
+//	if (!window)
+//	{
+//		cout << "Window not available!!" << endl;
+//	}
+//	else
+//	{
+//		cout << "Window is opening successfully!!" << endl;
+//	}
+//
+//	// make the window context current
+//	glfwMakeContextCurrent(window);
+//
+//	float vertices[] =
+//	{
+//		-1,-1,1,    //b
+//		1,-1,1,     //c  //front
+//		1,1,1,      //d
+//		-1,1,1,     //g
+//
+//		-1,-1,-1,  //a
+//		1,-1,-1,   //h   //back
+//		1,1,-1,     //e 
+//		-1,1,-1,    //f
+//
+//		-1,-1,-1,  //a
+//		-1,-1,1,    //b   //left
+//		-1,1,1,     //g
+//		-1,1,-1,     //f
+//	
+//		-1,1,-1,     //f
+//		-1,1,1,     //g   //top
+//		1,1,1,      //d  
+//		1,1,-1,     //e 
+//
+//		1,1,-1,     //e 
+//		1,-1,-1,   //h    //right
+//		1,-1,1,     //c
+//		1,1,1,      //d
+//
+//		-1,-1,-1,  //a
+//		-1,-1,1,    //b   //bottom
+//		1,-1,1,     //c
+//		1,-1,-1,   //h
+//	};
+//
+//	GLfloat colors[] =
+//	{
+//	0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+//	1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+//	0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+//	0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+//	0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+//	0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
+//	};
+//
+//	//gameloop
+//	while (!glfwWindowShouldClose(window))
+//	{
+//		//for the bg color
+//		glClearColor(0.5, 1, 1, 0); //for rgb color change
+//		glClear(GL_COLOR_BUFFER_BIT);//to clear the buffer
+//
+//		//draw triangle
+//		//glColor3f(1, 0, 0);
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
+//		glVertexPointer(3, GL_FLOAT, 0, vertices);
+//		glColorPointer(3, GL_FLOAT, 0, colors);
+//		glDrawArrays(GL_QUADS, 0, 24);
+//		glDisableClientState(GL_COLOR_ARRAY);
+//		glDisableClientState(GL_VERTEX_ARRAY);
+//
+//		glLoadIdentity();
+//		gluPerspective(100, wid / height, 1.2, 10);
+//		glTranslatef(0, 0, -1);
+//
+//		glfwSwapBuffers(window);//to swap the new color for window
+//		glfwPollEvents();
+//	}
+//	glfwTerminate();
+//}
+
+
+
+//lab 25 How to rotate
+
+
+#include<GL/glew.h>
+#include<GLFW/glfw3.h>
 #include<iostream>
-#define S_W 1000
-#define S_H 800
+
 using namespace std;
 
-static void cursorPosition(GLFWwindow* window, double xposi, double yposi);
-void cursorEnter(GLFWwindow* window, int enter);
-void mouseBtn(GLFWwindow* window, int btn, int act, int mods);
-void scrollBtn(GLFWwindow* window, double xoffset, double yoffset);
-
-int main(void)//1. main fun
+void main()
 {
-	//for window width and height
-	GLint wid = 1000;
-	GLint height = 800;
-	//for holding window
-	GLFWwindow* window;//pointer variable 
-
-	glfwInit();//glfw initialize
+	GLint wid = 800; //*window variable
+	GLint height = 800; //*window variable
+	GLFWwindow* window; //pointer var as window that will hold address only 
+	glfwInit();
 	if (!glfwInit())
 	{
-		cout << "glfw init function error" << endl;
+		cout << "glfwINit function error!!" << endl;
 	}
 	else
 	{
-		cout << "glfw init sucess" << endl;
+		cout << "glfwINit function is available!!" << endl;
 	}
-	// create a windowmode and its opengl context
-	window = glfwCreateWindow(S_W, S_H, " opengl GAME WINDOW with background color", NULL, NULL);
+	window = glfwCreateWindow(wid, height, "Window with background color", NULL, NULL); //*assigned window variable 
 	if (!window)
 	{
-		glfwTerminate();
-		cout << "window error" << endl;
+		cout << "Window not available!!" << endl;
 	}
 	else
 	{
-		cout << "window sucess" << endl;
+		cout << "Window is opening successfully!!" << endl;
 	}
 
 	// make the window context current
 	glfwMakeContextCurrent(window);
 
-	//mouse functions calling 
-	glfwSetCursorPosCallback(window, cursorPosition);
-	glfwSetCursorEnterCallback(window, cursorEnter);
-	glfwSetMouseButtonCallback(window, mouseBtn);
-	glfwSetScrollCallback(window, scrollBtn);
-
 	float vertices[] =
 	{
-		//road
-		0,100,0,
-		1000,100,0,
-		1000,25,0,
-		0,25,0
-	};
-	float colorRoad[] =
-	{
-		//rgb
-		0,0,0,
-		0,0,0,
-		0,0,0
-	};
-	float bus[] =
-	{
-		//bus
-		700,125,0,
-		900,125,0,
-		900,200,0,
-		700,200,0,
-	};
-	float colorbus[] =
-	{
-		//rgb
-		1,0,0,
-		1,0,0,
-		1,0,0,
-		1,0,0
-	};
-	float house[] = {
-		//house
-		100,200,0,
-		200,200,0,
-		200,300,0,
-		100,300,0,
-		
-		100,300,0,
-		150,350,0,
-		200,300,0
-	};
-	float colorhs[] =
-	{
-		//rgb
-		0,0,1,
-		0,0,1,
-		0,0,1,
-		0,0,1
-	};
-	float lwindow[] =
-	{
-		//left window
-			120,250,0,
-			130,250,0,
-			130,270,0,
-			120,270,0,
-	};
-	float colorlw[] =
-	{
-		//rgb
-		1,1,1,
-		1,1,1,
-		1,1,1
-	};
-	float rwindow[] =
-	{
-		//right window
-		170,250,0,
-		180,250,0,
-		180,270,0,
-		170,270,0,
-	};
-	float tree[] =
-	{
-		//tree
-			550,500,0,
-			600,550,0,
-			650,500,0,
-			550,500,0,
+		-1,-1,1,    //b
+		1,-1,1,     //c  //front
+		1,1,1,      //d
+		-1,1,1,     //g
 
-	};
-	float tree1[] =
-	{
-		//tree
-		585, 500, 0,
-		585, 450, 0,
-		600, 450, 0,
-		600, 500, 0,
-		585, 500, 0,
-	};
-	float hill[] = {
-		//hills
-		0,650,0,
-		100,750,0,
-		250,700,0,
-		200,650,0,
-		0,650,0,
+		-1,-1,-1,  //a
+		1,-1,-1,   //h   //back
+		1,1,-1,     //e 
+		-1,1,-1,    //f
 
-	};
-	float hill1[] = {
-		200,650,0,
-		300,775,0,
-		450,700,0,
-		400,650,0,
-		200,650,0,
-		};
+		-1,-1,-1,  //a
+		-1,-1,1,    //b   //left
+		-1,1,1,     //g
+		-1,1,-1,     //f
 
-	float hill2[] = {
-		400, 650, 0,
-		500, 750, 0,
-		650, 700, 0,
-		600, 650, 0,
-		400, 650, 0
-	};
-	float hill3[] = {
-		600, 650, 0,
-		700, 775, 0,
-		850, 700, 0,
-		800, 650, 0,
-		600, 650, 0,
-	};
-	float hill4[] = {
-		800,650,0,
-		900,750,0,
-		1000,650,0,
-		800,650,0
+		-1,1,-1,     //f
+		-1,1,1,     //g   //top
+		1,1,1,      //d  
+		1,1,-1,     //e 
+
+		1,1,-1,     //e 
+		1,-1,-1,   //h    //right
+		1,-1,1,     //c
+		1,1,1,      //d
+
+		-1,-1,-1,  //a
+		-1,-1,1,    //b   //bottom
+		1,-1,1,     //c
+		1,-1,-1,   //h
 	};
 
-	float colorhill[] = {
-		//rgb
-		//as many vertex as many points
-		0,1,0,
-		0,1,0,
-		0,1,0,
-		0,1,0
+	GLfloat colors[] =
+	{
+	0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+	1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+	0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+	0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+	0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+	0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
 	};
 
-	//FOR SCREEN RESOLUTION
-	glViewport(0, 0, S_W, S_H);//for view your screen(1. x, 2. y,3. w, 4. h)
-	glMatrixMode(GL_PROJECTION);// for change matrix mode
-	glOrtho(0, S_W, 0, S_H, 0.5, 0);//NEW COORDINATE SYSTEM/ hover mouse seeparameters(this represent the actual coordinate system which you changed)
-	glMatrixMode(GL_MODELVIEW);//FOR DEFAULT MATRIX MODE(in future from here we will apply transformation)
-
-	//loop untill the user not close the window
+	//gameloop
 	while (!glfwWindowShouldClose(window))
 	{
+		//for the bg color
+		glClearColor(0.5, 1, 1, 0); //for rgb color change
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//to clear the buffer
 
-		//for background color
-		glClearColor(0, 1, 1, 0); //for get the RGB color
-		glClear(GL_COLOR_BUFFER_BIT);//for clear the buffer
 
-		//road
+		glMatrixMode(GL_PROJECTION_MATRIX);
+		glLoadIdentity();
+		gluPerspective(100, wid / height, 1.2, 10);
+		glTranslatef(0, 0, -5);
+
+		static float angle = 0;
+		glRotatef(angle, 0, 1, -1);
+
+		//draw triangle
+		//glColor3f(1, 0, 0);
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorRoad);
 		glVertexPointer(3, GL_FLOAT, 0, vertices);
-		glDrawArrays(GL_POLYGON, 0, 4);
+		glColorPointer(3, GL_FLOAT, 0, colors);
+		glDrawArrays(GL_QUADS, 0, 24);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		angle += 0.2;
+		
 
-		//bus
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glColor3f(1, 0, 0);
-		//glEnableClientState(GL_COLOR_ARRAY);
-		//glColorPointer(3, GL_FLOAT, 0, colorbus);
-		glVertexPointer(3, GL_FLOAT, 0, bus);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		//glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		//house
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glColor3f(0,0,1);
-		//glEnableClientState(GL_COLOR_ARRAY);
-		//glColorPointer(3, GL_FLOAT, 0, colorhs);
-		glVertexPointer(3, GL_FLOAT, 0, house);
-		glDrawArrays(GL_POLYGON, 0, 7);
-		//glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		//lwindow
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glColor3f(1, 1, 1);
-		//glEnableClientState(GL_COLOR_ARRAY);
-		//glColorPointer(3, GL_FLOAT, 0, colorlw);
-		glVertexPointer(3, GL_FLOAT, 0, lwindow);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		//glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		//rwindow
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glColor3f(1, 1, 1);
-		//glEnableClientState(GL_COLOR_ARRAY);
-		//glColorPointer(3, GL_FLOAT, 0, colorlw);
-		glVertexPointer(3, GL_FLOAT, 0, rwindow);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		//glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		//tree
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, tree);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		//tree
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, tree1);
-		glDrawArrays(GL_POLYGON, 0, 5);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-
-		//hills
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, hill);
-		glDrawArrays(GL_POLYGON, 0, 5);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, hill1);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, hill2);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, hill3);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colorhill);
-		glVertexPointer(3, GL_FLOAT, 0, hill4);
-		glDrawArrays(GL_POLYGON, 0, 4);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		glfwSwapBuffers(window);//for swap the new color for window
-		glfwPollEvents();//it detects different event and process
+		glfwSwapBuffers(window);//to swap the new color for window
+		glfwPollEvents();
 	}
 	glfwTerminate();
-	return 0;
 }
-
-
-static void cursorPosition(GLFWwindow* window, double xposi, double yposi)
-{
-	cout << "x posi==" << xposi << "!!" << "y posi==" << yposi << endl;
-
-}
-void cursorEnter(GLFWwindow* window, int enter)
-{
-	if (enter)
-	{
-		cout << "hey you entered inside window" << endl;
-	}
-	else
-	{
-		cout << "you left the window" << endl;
-	}
-}
-void mouseBtn(GLFWwindow* window, int btn, int act, int mods)
-{
-	if (btn == GLFW_MOUSE_BUTTON_RIGHT && act == GLFW_PRESS)
-	{
-		cout << "Right button has been pressed" << endl;
-	}
-	if (btn == GLFW_MOUSE_BUTTON_LEFT && act == GLFW_PRESS)
-	{
-		cout << "LEft button has been pressed" << endl;
-	}
-}
-void scrollBtn(GLFWwindow* window, double xoffset, double yoffset)
-{
-	cout << "xoffset==" << xoffset << "!!" << "yoffset==" << yoffset << endl;
-}
-
