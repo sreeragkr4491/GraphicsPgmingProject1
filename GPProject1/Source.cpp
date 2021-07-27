@@ -3664,7 +3664,7 @@
 //}
 
 
-// lab29
+// lab29    cube fixed code
 
 
 //#include<GL/glew.h>
@@ -3806,13 +3806,7 @@
 //			break;
 //		}
 //	}
-//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
-//	{
-//		switch (key)
-//		{
-//		
-//		}
-//	}
+//	
 //}
 
 //lab30     2 cube with rotation 
@@ -5395,11 +5389,759 @@
 
 //lab 35 Scaling with keys
 
+//
+//#include <GL/glew.h>
+//#include <GLFW/glfw3.h>
+////#include <iostream>
+////#include <cstdlib>
+//
+//#define SCREEN_WIDTH 1200
+//#define SCREEN_HEIGHT 800
+//
+//void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+//void DrawCube(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
+//
+//
+//float red = 255, green = 255, blue = 255;
+//
+//GLfloat rotationx = 0.0f;
+//GLfloat rotationy = 0.0f;
+//
+////scaling
+//GLfloat scalefactor = 1.0f;
+//GLboolean scaleup = false;
+//
+//GLfloat rotationx1 = 0.0f;
+//GLfloat rotationy1 = 0.0f;
+//
+//GLfloat rotationx2 = 0.0f;
+//GLfloat rotationy2 = 0.0f;
+//
+//GLfloat rotationx3 = 0.0f;
+//GLfloat rotationy3 = 0.0f;
+////GLfloat rotationZ = 0.0f;
+//
+//int main(void)
+//{
+//	GLFWwindow* window;
+//
+//	// Initialize the library
+//	if (!glfwInit())
+//	{
+//		return -1;
+//	}
+//
+//	// Create a windowed mode window and its OpenGL context
+//	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World", NULL, NULL);
+//
+//	glfwSetKeyCallback(window, keyCallback);
+//	
+//	//glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+//
+//
+//	int screenWidth, screenHeight;
+//	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
+//
+//	if (!window)
+//	{
+//		glfwTerminate();
+//		return -1;
+//	}
+//
+//	// Make the window's context current
+//	glfwMakeContextCurrent(window);
+//	glEnable(GL_DEPTH_TEST);
+//	glViewport(0.0f, 0.0f, screenWidth, screenHeight); // specifies the part of the window to which OpenGL will draw (in pixels), convert from normalised to pixels
+//	glMatrixMode(GL_PROJECTION); // projection matrix defines the properties of the camera that views the objects in the world coordinate frame. Here you typically set the zoom factor, aspect ratio and the near and far clipping planes
+//	glLoadIdentity(); // replace the current matrix with the identity matrix and starts us a fresh because matrix transforms such as glOrpho and glRotate cumulate, basically puts us at (0, 0, 0)
+//	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1000); // essentially set coordinate system
+//	glMatrixMode(GL_MODELVIEW); // (default matrix mode) modelview matrix defines how your objects are transformed (meaning translation, rotation and scaling) in your world
+//	glLoadIdentity(); // same as above comment
+//
+//	GLfloat halfScreenWidth = SCREEN_WIDTH / 3;
+//	GLfloat halfScreenHeight = SCREEN_HEIGHT / 3;
+//
+//
+//	// Loop until the user closes the window
+//	while (!glfwWindowShouldClose(window))
+//	{
+//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//		// Render OpenGL here
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth, halfScreenHeight, -500);
+//		glRotatef(rotationx, 1, 0, 0);
+//		glRotatef(rotationy, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//
+//		//scaling
+//		glScalef(scalefactor, scalefactor, scalefactor);
+//		
+//
+//
+//		glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth, halfScreenHeight, -500, 100);
+//		glPopMatrix();
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth + 200, halfScreenHeight + 200, -500);
+//		glRotatef(rotationx1, 1, 0, 0);
+//		glRotatef(rotationy1, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//		glTranslatef(-(halfScreenWidth + 200), -(halfScreenHeight + 200), 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth + 200, halfScreenHeight + 200, -500, 100);
+//		glPopMatrix();
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth + 300, halfScreenHeight, -500);
+//		glRotatef(rotationx2, 1, 0, 0);
+//		glRotatef(rotationy2, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//		glTranslatef(-(halfScreenWidth + 300), -halfScreenHeight, 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth + 300, halfScreenHeight, -500, 100);
+//		glPopMatrix();
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth - 100, halfScreenHeight + 200, -500);
+//		glRotatef(rotationx3, 1, 0, 0);
+//		glRotatef(rotationy3, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//		glTranslatef(-(halfScreenWidth - 100), -(halfScreenHeight + 200), 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth - 100, halfScreenHeight + 200, -500, 100);
+//		glPopMatrix();
+//
+//		// Swap front and back buffers
+//		glfwSwapBuffers(window);
+//
+//		// Poll for and process events
+//		glfwPollEvents();
+//	}
+//
+//	glfwTerminate();
+//
+//	return 0;
+//}
+//
+//
+//
+//void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+//{
+//	//std::cout << key << std::endl;
+//
+//	const GLfloat rotationSpeed = 10;
+//
+//	// actions are GLFW_PRESS, GLFW_RELEASE or GLFW_REPEAT
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_UP:
+//			rotationx -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_DOWN:
+//			rotationx += rotationSpeed;
+//			break;
+//		case GLFW_KEY_RIGHT:
+//			rotationy += rotationSpeed;
+//			break;
+//		case GLFW_KEY_LEFT:
+//			rotationy -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_8:
+//			rotationx1 -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_2:
+//			rotationx1 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_6:
+//			rotationy1 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_4:
+//			rotationy1 -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_W:
+//			rotationx2 -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_S:
+//			rotationx2 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_D:
+//			rotationy2 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_A:
+//			rotationy2 -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_P:
+//			rotationx3 -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_L:
+//			rotationx3 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_M:
+//			rotationy3 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_N:
+//			rotationy3 -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_F1:
+//			red = 255;
+//			green = 0;
+//			blue = 0;
+//			break;
+//		case GLFW_KEY_F2:
+//			red = 0;
+//			green = 255;
+//			blue = 0;
+//			break;
+//		case GLFW_KEY_F3:
+//			red = 0;
+//			green = 0;
+//			blue = 255;
+//			break;
+//		case GLFW_KEY_F4:
+//			red = 255;
+//			green = 0;
+//			blue = 255;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_G:
+//		{
+//
+//			if (scalefactor <= 2.0)
+//			{
+//				scalefactor += 0.1;
+//			}
+//			else
+//				scaleup = false;
+//			break;
+//		}
+//		case GLFW_KEY_H:
+//		{
+//
+//			if (scalefactor >= 0.5)
+//			{
+//				scalefactor -= 0.1;
+//
+//			}
+//			else
+//				scaleup = true;
+//			break;
+//		}
+//
+//		}
+//
+//	}
+//}
+//
+//
+//
+//
+//void DrawCube(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
+//{
+//	GLfloat halfSideLength = edgeLength * 0.5f;
+//
+//	GLfloat vertices[] =
+//	{
+//		//back face
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//		centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top right
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//		centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom left
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//
+//		//left
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom left
+//
+//		//top
+//		centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top right
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//
+//		//right
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top right
+//
+//		//bottom
+//		centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom left
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//	};
+//
+//
+//
+//	//color
+//	GLfloat colors[] =
+//	{
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue
+//	};
+//
+//
+//	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//	glColor3f(colors[0], colors[1], colors[2]);
+//	glEnableClientState(GL_VERTEX_ARRAY);
+//	glVertexPointer(3, GL_FLOAT, 0, vertices);
+//
+//	//color enable
+//	glEnableClientState(GL_COLOR_ARRAY);
+//	glColorPointer(3, GL_FLOAT, 0, colors);
+//
+//	glDrawArrays(GL_TRIANGLES, 0, 18);
+//
+//	glDisableClientState(GL_VERTEX_ARRAY);
+//}
+//
+//
+
+//lab 36 translation or move
+
+//
+//#include <GL/glew.h>
+//#include <GLFW/glfw3.h>
+//#include <iostream>
+//#include <cstdlib>
+//
+//#define SCREEN_WIDTH 1200
+//#define SCREEN_HEIGHT 800
+//
+//void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+//void DrawCube(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
+//
+//
+//float red = 255, green = 255, blue = 255;
+//
+//GLfloat rotationx = 0.0f;
+//GLfloat rotationy = 0.0f;
+//
+////scaling
+//GLfloat scalefactor = 1.0f;
+//GLboolean scaleup = false;
+//
+//GLfloat rotationx1 = 0.0f;
+//GLfloat rotationy1 = 0.0f;
+//
+//GLfloat rotationx2 = 0.0f;
+//GLfloat rotationy2 = 0.0f;
+//
+//GLfloat rotationx3 = 0.0f;
+//GLfloat rotationy3 = 0.0f;
+////GLfloat rotationZ = 0.0f;
+//
+//int main(void)
+//{
+//	GLFWwindow* window;
+//
+//	// Initialize the library
+//	if (!glfwInit())
+//	{
+//		return -1;
+//	}
+//
+//	// Create a windowed mode window and its OpenGL context
+//	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World", NULL, NULL);
+//
+//	glfwSetKeyCallback(window, keyCallback);
+//	
+//	//glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+//
+//
+//	int screenWidth, screenHeight;
+//	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
+//
+//	if (!window)
+//	{
+//		glfwTerminate();
+//		return -1;
+//	}
+//
+//	// Make the window's context current
+//	glfwMakeContextCurrent(window);
+//	glEnable(GL_DEPTH_TEST);
+//	glViewport(0.0f, 0.0f, screenWidth, screenHeight); // specifies the part of the window to which OpenGL will draw (in pixels), convert from normalised to pixels
+//	glMatrixMode(GL_PROJECTION); // projection matrix defines the properties of the camera that views the objects in the world coordinate frame. Here you typically set the zoom factor, aspect ratio and the near and far clipping planes
+//	glLoadIdentity(); // replace the current matrix with the identity matrix and starts us a fresh because matrix transforms such as glOrpho and glRotate cumulate, basically puts us at (0, 0, 0)
+//	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1000); // essentially set coordinate system
+//	glMatrixMode(GL_MODELVIEW); // (default matrix mode) modelview matrix defines how your objects are transformed (meaning translation, rotation and scaling) in your world
+//	glLoadIdentity(); // same as above comment
+//
+//	GLfloat halfScreenWidth = SCREEN_WIDTH / 3;
+//	GLfloat halfScreenHeight = SCREEN_HEIGHT / 3;
+//
+//
+//	// Loop until the user closes the window
+//	while (!glfwWindowShouldClose(window))
+//	{
+//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//		// Render OpenGL here
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth, halfScreenHeight, -500);
+//		glRotatef(rotationx, 1, 0, 0);
+//		glRotatef(rotationy, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//
+//		//scaling
+//		glScalef(scalefactor, scalefactor, scalefactor);
+//		
+//		//translate
+//		static float translate = 0;
+//		glTranslatef(-0.3 + translate , -0.3 , -5);
+//			
+//
+//		glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth, halfScreenHeight, -500, 100);
+//		glPopMatrix();
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth + 200, halfScreenHeight + 200, -500);
+//		glRotatef(rotationx1, 1, 0, 0);
+//		glRotatef(rotationy1, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//		glTranslatef(-(halfScreenWidth + 200), -(halfScreenHeight + 200), 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth + 200, halfScreenHeight + 200, -500, 100);
+//		glPopMatrix();
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth + 300, halfScreenHeight, -500);
+//		glRotatef(rotationx2, 1, 0, 0);
+//		glRotatef(rotationy2, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//		glTranslatef(-(halfScreenWidth + 300), -halfScreenHeight, 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth + 300, halfScreenHeight, -500, 100);
+//		glPopMatrix();
+//
+//		glPushMatrix();
+//		glTranslatef(halfScreenWidth - 100, halfScreenHeight + 200, -500);
+//		glRotatef(rotationx3, 1, 0, 0);
+//		glRotatef(rotationy3, 0, 1, 0);
+//		//glRotatef(rotationY, 0, 0, 1);
+//		glTranslatef(-(halfScreenWidth - 100), -(halfScreenHeight + 200), 500);
+//		//glColor3f(1.0f, 0.0f,0.0f);
+//		DrawCube(halfScreenWidth - 100, halfScreenHeight + 200, -500, 100);
+//		glPopMatrix();
+//
+//
+//		//move speed
+//		translate += 0.02;
+//				
+//
+//		// Swap front and back buffers
+//		glfwSwapBuffers(window);
+//
+//		// Poll for and process events
+//		glfwPollEvents();
+//	}
+//
+//	glfwTerminate();
+//
+//	return 0;
+//}
+//
+//
+//
+//void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+//{
+//	//std::cout << key << std::endl;
+//
+//	const GLfloat rotationSpeed = 10;
+//
+//	// actions are GLFW_PRESS, GLFW_RELEASE or GLFW_REPEAT
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_UP:
+//			rotationx -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_DOWN:
+//			rotationx += rotationSpeed;
+//			break;
+//		case GLFW_KEY_RIGHT:
+//			rotationy += rotationSpeed;
+//			break;
+//		case GLFW_KEY_LEFT:
+//			rotationy -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_8:
+//			rotationx1 -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_2:
+//			rotationx1 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_6:
+//			rotationy1 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_4:
+//			rotationy1 -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_W:
+//			rotationx2 -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_S:
+//			rotationx2 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_D:
+//			rotationy2 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_A:
+//			rotationy2 -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_P:
+//			rotationx3 -= rotationSpeed;
+//			break;
+//		case GLFW_KEY_L:
+//			rotationx3 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_M:
+//			rotationy3 += rotationSpeed;
+//			break;
+//		case GLFW_KEY_N:
+//			rotationy3 -= rotationSpeed;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_F1:
+//			red = 255;
+//			green = 0;
+//			blue = 0;
+//			break;
+//		case GLFW_KEY_F2:
+//			red = 0;
+//			green = 255;
+//			blue = 0;
+//			break;
+//		case GLFW_KEY_F3:
+//			red = 0;
+//			green = 0;
+//			blue = 255;
+//			break;
+//		case GLFW_KEY_F4:
+//			red = 255;
+//			green = 0;
+//			blue = 255;
+//			break;
+//		}
+//	}
+//	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+//	{
+//		switch (key)
+//		{
+//		case GLFW_KEY_G:
+//		{
+//
+//			if (scalefactor <= 2.0)
+//			{
+//				scalefactor += 0.1;
+//			}
+//			else
+//				scaleup = false;
+//			break;
+//		}
+//		case GLFW_KEY_H:
+//		{
+//
+//			if (scalefactor >= 0.5)
+//			{
+//				scalefactor -= 0.1;
+//
+//			}
+//			else
+//				scaleup = true;
+//			break;
+//		}
+//
+//		}
+//
+//	}
+//}
+//
+//
+//
+//
+//void DrawCube(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
+//{
+//	GLfloat halfSideLength = edgeLength * 0.5f;
+//
+//	GLfloat vertices[] =
+//	{
+//		//back face
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//		centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top right
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//		centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom left
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//
+//		//left
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom left
+//
+//		//top
+//		centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top right
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX - halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top left
+//
+//		//right
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // top right
+//
+//		//bottom
+//		centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom left
+//		centerPosX + (halfSideLength - 50), centerPosY - (halfSideLength - 50), centerPosZ + halfSideLength, // center
+//		centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // bottom right
+//	};
+//
+//
+//
+//	//color
+//	GLfloat colors[] =
+//	{
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue,
+//	red, 0, 0,
+//	0, green, 0,
+//	0, 0, blue
+//	};
+//
+//
+//	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//	glColor3f(colors[0], colors[1], colors[2]);
+//	glEnableClientState(GL_VERTEX_ARRAY);
+//	glVertexPointer(3, GL_FLOAT, 0, vertices);
+//
+//	//color enable
+//	glEnableClientState(GL_COLOR_ARRAY);
+//	glColorPointer(3, GL_FLOAT, 0, colors);
+//
+//	glDrawArrays(GL_TRIANGLES, 0, 18);
+//
+//	glDisableClientState(GL_VERTEX_ARRAY);
+//}
+
+
+//lab 37 translation with keys
+
+
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-//#include <iostream>
-//#include <cstdlib>
+#include <iostream>
+#include <cstdlib>
 
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 800
@@ -5426,6 +6168,10 @@ GLfloat rotationy2 = 0.0f;
 GLfloat rotationx3 = 0.0f;
 GLfloat rotationy3 = 0.0f;
 //GLfloat rotationZ = 0.0f;
+
+//translate
+GLfloat transx = 0;
+GLfloat transy = 0;
 
 int main(void)
 {
@@ -5484,7 +6230,9 @@ int main(void)
 		//scaling
 		glScalef(scalefactor, scalefactor, scalefactor);
 		
-
+		//translate
+		glTranslatef(-0.3 + transx, -0.3 + transy, -5);
+			
 
 		glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
 		//glColor3f(1.0f, 0.0f,0.0f);
@@ -5521,6 +6269,10 @@ int main(void)
 		DrawCube(halfScreenWidth - 100, halfScreenHeight + 200, -500, 100);
 		glPopMatrix();
 
+
+		
+				
+
 		// Swap front and back buffers
 		glfwSwapBuffers(window);
 
@@ -5540,6 +6292,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	//std::cout << key << std::endl;
 
 	const GLfloat rotationSpeed = 10;
+	const GLfloat trans = 1;
 
 	// actions are GLFW_PRESS, GLFW_RELEASE or GLFW_REPEAT
 	if (action == GLFW_PRESS || action == GLFW_REPEAT)
@@ -5558,9 +6311,27 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		case GLFW_KEY_LEFT:
 			rotationy -= rotationSpeed;
 			break;
+		case GLFW_KEY_W:
+			transy += trans;
+			break;
+			
+		case GLFW_KEY_S:
+			transy -= trans;
+			break;
+			
+		case GLFW_KEY_A:
+			transx -= trans;
+			break;
+			
+		case GLFW_KEY_D:
+			transx += trans;
+			break;
+			
+		default:
+			break;
 		}
 	}
-	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+	/*if (action == GLFW_PRESS || action == GLFW_REPEAT)
 	{
 		switch (key)
 		{
@@ -5613,7 +6384,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 			rotationy3 -= rotationSpeed;
 			break;
 		}
-	}
+	}*/
 	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 	{
 		switch (key)
@@ -5671,6 +6442,8 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		}
 
 	}
+
+
 }
 
 
@@ -5760,5 +6533,7 @@ void DrawCube(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+
 
 
